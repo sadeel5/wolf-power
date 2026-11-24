@@ -1,0 +1,13 @@
+# VOLT Arc — Free Landing Page Template
+
+> VOLT Arc is a free, MIT-licensed, single-file HTML landing page template for product launches, made by Vantle (independent design and development studio, https://vantle.studio). Dark cinematic design for a fictional 204 hp electric motorcycle, with GSAP ScrollTrigger, Lenis smooth scroll, a procedural Three.js motor and six included product images. No build step.
+
+## Use
+- Live demo: https://middlesugar7000.github.io/volt-arc-landing-page-template/
+- Source: https://github.com/MiddleSugar7000/volt-arc-landing-page-template
+- Start: open index.html or run `npx serve .`
+- Customize: CSS variables on :root in index.html; images in assets/; 3D motor in assets/motor.js
+
+## Author
+- Vantle is an independent design and development studio: brand and identity, web design and 3D, full-stack SaaS, APIs and AI features. Focused landing pages usually take 2 to 4 weeks, complete SaaS builds 6 to 12.
+- Contact: https://vantle.studio/#start or hello@vantle.studio (reply within one business day)
