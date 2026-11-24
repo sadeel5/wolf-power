@@ -2541,13 +2541,22 @@ document.querySelectorAll('#wolf-gallery video')
     timer = setTimeout(finish, 15000);
 
     async function startIntro() {
+        video.playsInline = true;
+        video.setAttribute('playsinline', '');
+        video.setAttribute('webkit-playsinline', '');
+
+        const mobile = /iPhone|iPad|iPod|Android/i.test(
+            navigator.userAgent
+        );
+
+        video.muted = mobile;
+        video.volume = 1;
+
         try {
-            video.muted = false;
-            video.volume = 0.85;
             await video.play();
         } catch(e) {
+            video.muted = true;
             try {
-                video.muted = true;
                 await video.play();
             } catch(e) {
                 finish();
