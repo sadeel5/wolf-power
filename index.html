@@ -2503,9 +2503,12 @@ document.querySelectorAll('#wolf-gallery video')
         id="wolf-intro-video"
         src="assets/wolfpower/branding/wolf-intro.mp4"
         preload="auto"
-        playsinline
         autoplay
+        muted
+        playsinline
+        webkit-playsinline
         style="opacity:1">
+    
     </video>
 </div>
 
@@ -2549,7 +2552,9 @@ document.querySelectorAll('#wolf-gallery video')
             navigator.userAgent
         );
 
-        video.muted = mobile;
+        video.defaultMuted = true;
+        video.muted = true;
+        video.setAttribute('muted', '');
         video.volume = 1;
 
         try {
@@ -2579,7 +2584,9 @@ document.querySelectorAll('#wolf-gallery video')
 
     screen.addEventListener('click', unlockWolfSound);
 
-    startIntro();
+    requestAnimationFrame(() => {
+        startIntro();
+    });
 
 })();
 </script>
