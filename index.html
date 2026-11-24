@@ -902,6 +902,29 @@ html, body {
 
 </head>
 <body class="is-loading">
+<div id="wolf-intro-screen">
+<video id="wolf-intro-video" src="assets/wolfpower/branding/wolf-intro.mp4" preload="auto" muted autoplay playsinline webkit-playsinline style="opacity:1"></video>
+</div>
+<script>
+(function(){
+ const screen=document.getElementById('wolf-intro-screen');
+ const video=document.getElementById('wolf-intro-video');
+ let done=false, timer;
+ document.documentElement.classList.add('wolf-intro-active');
+ function finish(){if(done)return;done=true;clearTimeout(timer);video.pause();screen.classList.add('finished');document.documentElement.classList.remove('wolf-intro-active');setTimeout(()=>screen.remove(),1100);}
+ video.addEventListener('ended',finish);
+ video.addEventListener('error',finish);
+ video.addEventListener('playing',()=>{clearTimeout(timer);timer=setTimeout(finish,20000);});
+ function play(){if(done)return;video.play().catch(()=>{});}
+ video.defaultMuted=true;video.muted=true;
+ const desktop=!matchMedia('(pointer: coarse)').matches;
+ if(desktop){video.muted=false;video.play().catch(()=>{if(!done){video.muted=true;play();}});}else{play();}
+ video.addEventListener('canplay',()=>{if(video.paused&&!done)play();});
+ screen.addEventListener('click',()=>{if(done)return;video.muted=false;video.play().catch(()=>{video.muted=true;play();});});
+ timer=setTimeout(finish,25000);
+})();
+</script>
+
 
 <!-- Fixed full-bleed WebGL background canvas and introductory charging preloader -->
 <canvas id="gl" aria-hidden="true"></canvas>
@@ -2498,98 +2521,7 @@ document.querySelectorAll('#wolf-gallery video')
 </script>
 
 
-<div id="wolf-intro-screen">
-    <video
-        id="wolf-intro-video"
-        src="assets/wolfpower/branding/wolf-intro.mp4"
-        preload="auto"
-        autoplay
-        muted
-        playsinline
-        webkit-playsinline
-        style="opacity:1">
-    
-    </video>
-</div>
 
-<script>
-(function () {
-    const screen = document.getElementById('wolf-intro-screen');
-    const video = document.getElementById('wolf-intro-video');
-
-    let finished = false;
-    let timer;
-
-    document.documentElement.classList.add('wolf-intro-active');
-
-    function finish() {
-        if (finished) return;
-        finished = true;
-
-        clearTimeout(timer);
-        video.pause();
-
-        screen.classList.add('finished');
-
-        document.documentElement.classList.remove(
-            'wolf-intro-active'
-        );
-
-        setTimeout(() => screen.remove(), 1100);
-    }
-
-    video.addEventListener('ended', finish);
-    video.addEventListener('error', finish);
-
-    timer = setTimeout(finish, 15000);
-
-    async function startIntro() {
-        video.playsInline = true;
-        video.setAttribute('playsinline', '');
-        video.setAttribute('webkit-playsinline', '');
-
-        const mobile = /iPhone|iPad|iPod|Android/i.test(
-            navigator.userAgent
-        );
-
-        video.defaultMuted = true;
-        video.muted = true;
-        video.setAttribute('muted', '');
-        video.volume = 1;
-
-        try {
-            await video.play();
-        } catch(e) {
-            video.muted = true;
-            try {
-                await video.play();
-            } catch(e) {
-                finish();
-            }
-        }
-    }
-
-
-    function unlockWolfSound() {
-        if (finished) return;
-
-        video.muted = false;
-        video.volume = 1;
-
-        video.play().catch(() => {
-            video.muted = true;
-            video.play().catch(() => {});
-        });
-    }
-
-    screen.addEventListener('click', unlockWolfSound);
-
-    requestAnimationFrame(() => {
-        startIntro();
-    });
-
-})();
-</script>
 
 
 </body>
